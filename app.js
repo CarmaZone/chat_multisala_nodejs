@@ -37,25 +37,23 @@ io.sockets.on('connection', function(socket) {
 
 	console.log('Conectado al servidor');
 
-		// almacenar el nombre del usuario en la sesión
-		store the username in the socket session for this client
+	// almacenar el nombre del usuario en la sesiÃ³n
          socket.username = user;
-        // almacenar el nombre del usuario en la sesión
+        // almacenar el nombre del usuario en la sesiÃ³n
         socket.room = sala;
         // unir usuario a la sala
         socket.join(socket.room);
-        // Envío de vuelta al MISMO usuario
+        // EnvÃ­o de vuelta al MISMO usuario
         socket.emit('updatechat', 'SERVER', 'Bienvenido ' + socket.username);
-        // Envío a todos los usuarios de la sala MENOS el emisor
+        // EnvÃ­o a todos los usuarios de la sala MENOS el emisor
         socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' se ha conectado a la sala.');
 
         //Recoger y listar usuarios de la sala
-		update_list_users();
-		io.sockets.in(socket.room).emit('updateusers', list_users);
-
+	update_list_users();
+	io.sockets.in(socket.room).emit('updateusers', list_users);
 
 	socket.on('sendchat', function (data) {
-		// Envío a todos los usarios de una sala, INCLUIDO el emisor
+		// EnvÃ­o a todos los usarios de una sala, INCLUIDO el emisor
 		io.sockets.in(socket.room).emit('updatechat', socket.username, data);
 	});		
 		
@@ -66,8 +64,8 @@ io.sockets.on('connection', function(socket) {
         socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' se ha desconectado');
         socket.leave(socket.room);
 		
-		update_list_users();
-		socket.broadcast.to(socket.room).emit('updateusers', list_users);
+	update_list_users();
+	socket.broadcast.to(socket.room).emit('updateusers', list_users);
     });
 	
 	
@@ -83,6 +81,3 @@ io.sockets.on('connection', function(socket) {
 		
 	}
 });
-
-
-
